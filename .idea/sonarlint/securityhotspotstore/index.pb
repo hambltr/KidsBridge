@@ -196,3 +196,5 @@ E
 -src/component/basic_component/uesFormatKST.js,1\1\119b7eae935d002b562680f77519cb21981aea23
 N
 src/component/pages/sign_up.js,e\f\ef29c0dcdbfde4b0d91d9b6e183c151af1f8cae5
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
