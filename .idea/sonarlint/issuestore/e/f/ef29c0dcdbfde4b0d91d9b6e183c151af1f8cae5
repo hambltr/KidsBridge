@@ -1,7 +1,10 @@
 
-Gjavascript:S1128"%Remove this unused import of 'Logo2'.(¨«­j8ğ áÊé1
-Wjavascript:S6853D"/A form label must be associated with a control.(ªˆ÷ùÿÿÿÿ8ñ áÊé1
-Rjavascript:S6853M"/A form label must be associated with a control.(ÀõÖë8ƒ«ƒËé1
-Wjavascript:S6853["/A form label must be associated with a control.(„¿ğÍøÿÿÿÿ8œİËé1
-Wjavascript:S6853i"/A form label must be associated with a control.(èÛ«–ıÿÿÿÿ8›ôËé1
-Wjavascript:S6853w"/A form label must be associated with a control.(´»²“ÿÿÿÿÿ8Ü¦‘Ëé1
+Gjavascript:S1128"%Remove this unused import of 'Logo2'.(¨«­j8àİ×¡ò1
+^javascript:S6353";Use concise character class syntax '\d' instead of '[0-9]'.(ÈÜ®ª8áİ×¡ò1
+ejavascript:S1481"=Remove the declaration of the unused 'handleSignUp' variable.(Îšƒ×øÿÿÿÿ8áİ×¡ò1
+bjavascript:S1854":Remove this useless assignment to variable "handleSignUp".(Îšƒ×øÿÿÿÿ8áİ×¡ò1
+_javascript:S63534"<Use concise character class syntax '\D' instead of '[^0-9]'.(äÁæÛ8áİ×¡ò1
+Xjavascript:S6853"/A form label must be associated with a control.(ªˆ÷ùÿÿÿÿ8áİ×¡ò1
+Bjavascript:S6479–"Do not use Array index in keys(¸¦¾œ8áİ×¡ò1
+Sjavascript:S6853—"/A form label must be associated with a control.(°á±‹8áİ×¡ò1
+?javascript:S1874Â"'onKeyPress' is deprecated.(š¡ª¤8áİ×¡ò1

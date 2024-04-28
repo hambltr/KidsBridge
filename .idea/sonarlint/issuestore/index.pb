@@ -196,3 +196,7 @@ E
 -src/component/basic_component/uesFormatKST.js,1\1\119b7eae935d002b562680f77519cb21981aea23
 N
 src/component/pages/sign_up.js,e\f\ef29c0dcdbfde4b0d91d9b6e183c151af1f8cae5
+[
++src/component/basic_component/base_terms.js,7\8\7868c658c9194f625b3699c5f55061bf274bf854
+Å
+Q.idea/sonarlint/securityhotspotstore/7/8/7868c658c9194f625b3699c5f55061bf274bf854,2\1\21dcd7326e2bd84519a7f73a4a123b45ab6d4238

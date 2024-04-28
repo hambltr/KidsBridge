@@ -1222,6 +1222,10 @@ ul, li, p, a {
   width: 520px;
 }
 
+.sign_up_input_wrap::after {
+
+}
+
 .sign_up_header {
   width: 350px;
   margin-bottom: 20px;
@@ -1313,12 +1317,17 @@ ul, li, p, a {
 }
 
 /* border_bottom_line */
-.border_bottom_line {
+.border_bottom_line::after {
+  content: "";
+  display: block;
   width: 100%;
   border-bottom: 3px solid #ccc;
   margin: 10px 0;
 }
 
+.terms {
+  cursor: pointer;
+}
 
 /* =============================================== */
 
