@@ -1,8 +1,9 @@
-import {ReactComponent as Logo2} from "../../img/icon/KidsBridge_logo_black.svg";
 import React, {useEffect, useState} from "react";
 import {ChevronRight as ArrowRight} from "react-bootstrap-icons";
 import {useNavigate} from 'react-router-dom';
-import { auth } from '../../firebaseConfig';
+import { auth } from "../../firebaseConfig";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 
 function SignUp() {
 
@@ -18,8 +19,10 @@ function SignUp() {
         }
       }},
     { id: 'email', label: '이메일', type: 'email', placeholder: '이메일 입력' },
-    { id: 'password', label: '비밀번호', type: 'password', placeholder: '비밀번호 입력' }
+    { id: 'password', label: '비밀번호', type: 'password', placeholder: '비밀번호 입력'}
   ];
+
+  const [page, setPage] = useState(1);
 
   const goBack = () => {
     setPage(1);
@@ -27,16 +30,24 @@ function SignUp() {
 
 
   //회원가입 기능 (파이어베이스)
-  const handleSignUp = async () => {
-    try {
-      const userCredential = await auth.createUserWithEmailAndPassword(inputs.email, inputs.password);
-      console.log("User created:", userCredential);
-      navigate('/');
-    } catch (error) {
-      console.error("Error signing up:", error);
-      alert(error.message);
-    }
+  const handleSignUp = async (event) => {
+    event.preventDefault();
+    const { email, password } = inputs; // inputs 상태에서 email과 password를 추출
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // 회원가입 성공 시 처리
+        console.log("User created:", userCredential.user);
+        alert("회원가입 완료, 로그인 페이지로 이동합니다.")
+        navigate(`/login`);
+      })
+      .catch((error) => {
+        // 에러 처리
+        console.error("Error signing up:", error);
+        alert(error.message);
+      });
   };
+
 
   // 입력값 상태 관리
   const [inputs, setInputs] = useState({
@@ -65,8 +76,6 @@ function SignUp() {
       setInputs(prev => ({ ...prev, [id]: value }));
     }
   };
-
-  const [page, setPage] = useState(1);
 
   const checkBoxes = [
     {id: 'over_14', label: '만 14세 이상 회원입니다.', required: true},
@@ -197,7 +206,14 @@ function SignUp() {
             ))}
             <div>
               <button onClick={()=>goBack()}>이전</button>
-              <button>가입하기</button>
+              <button
+                type="button"
+                onClick={handleSignUp} // handleSignUp 함수를 onClick 이벤트에 할당
+                // disabled={!allRequiredChecked || !inputs.email || !inputs.password}
+              >
+                가입하기
+              </button>
+
             </div>
           </form>
         )

@@ -11,6 +11,7 @@ import Diet from "./component/main/diet";
 import ReturnHome from "./component/main/return_home";
 import Medicine from "./component/main/medicine";
 import Detail from "./component/reminiscence/detail";
+import { auth } from "./firebaseConfig";
 import SignUp from "./component/pages/sign_up";
 
 function App() {
