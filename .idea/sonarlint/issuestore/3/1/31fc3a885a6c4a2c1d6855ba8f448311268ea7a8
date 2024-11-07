@@ -1,0 +1,19 @@
+
+Ijavascript:S1128"&Remove this unused import of 'People'.(”ä¿Ë8±èØè1
+Hjavascript:S1128"%Remove this unused import of 'House'.(”ä¿Ë8±èØè1
+Kjavascript:S1128"(Remove this unused import of 'SvgBoard'.(š“şü8Çñäè1
+Ojavascript:S1128"'Remove this unused import of 'Weather'.(´×ÉÎÿÿÿÿÿ8±èØè1
+Njavascript:S1128"&Remove this unused import of 'UnAuth'.(à£×ïúÿÿÿÿ8±èØè1
+Njavascript:S1128"&Remove this unused import of 'Notice'.(û€éûÿÿÿÿÿ8²èØè1
+Sjavascript:S1128"+Remove this unused import of 'NoticeBoard'.(¸–Öôıÿÿÿÿ8²èØè1
+Ljavascript:S1128"$Remove this unused import of 'Base'.(´˜À¹ÿÿÿÿÿ8²èØè1
+Gjavascript:S1128"$Remove this unused import of 'Mini'.(ÎËí8²èØè1
+Qjavascript:S1128")Remove this unused import of 'BoardList'.(šÄ„‡ıÿÿÿÿ8²èØè1
+bjavascript:S6754 ":useState call is not destructured into value + setter pair(âÏóÕıÿÿÿÿ8ãáâè1
+]javascript:S6754*":useState call is not destructured into value + setter pair(â…¢ù8²èØè1
+bjavascript:S67546":useState call is not destructured into value + setter pair(İ°—×øÿÿÿÿ8²èØè1
+çjavascript:S6848‘"ÂAvoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.(€Î»İ8‘™øè1
+ƒjavascript:S1082‘"_Visible, non-interactive elements with click handlers must have at least one keyboard listener.(€Î»İ8‘™øè1
+vjavascript:S6847Ò"RNon-interactive elements should not be assigned mouse or keyboard event listeners.(ÆÑéè8‚ûøè1
+ƒjavascript:S1082Ò"_Visible, non-interactive elements with click handlers must have at least one keyboard listener.(ÆÑéè8‚ûøè1
+¢javascript:S6844ù"øThe href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles.(Ü¯¶˜ÿÿÿÿÿ8‚ûøè1

@@ -1,0 +1,12 @@
+﻿cl : 명령줄  warning D9035: 'Gm' 옵션은 더 이상 사용되지 않으므로 이후 릴리스에서 제거될 예정입니다.
+  HelloAPI.cpp
+C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\HelloAPI.cpp(87,12): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\HelloAPI.cpp(96,9): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\HelloAPI.cpp(282,25): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\HelloAPI.cpp(283,12): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\HelloAPI.cpp(310,22): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\HelloAPI.cpp(321,14): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\HelloAPI.cpp(328,24): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\HelloAPI.cpp(285,12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+HelloAPI.obj : warning LNK4075: '/EDITANDCONTINUE'이(가) '/SAFESEH' 사양으로 인해 무시됩니다.
+  HelloAPI.vcxproj -> C:\Users\FV\Desktop\대기시간 3.4 - window (2022)\Debug\HelloAPI.exe
