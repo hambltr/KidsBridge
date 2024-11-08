@@ -90,13 +90,16 @@ function NoticeBoard() {
           </BaseBoardGrid>
         ) : (
           <>
+            <BaseBoardGrid showTitle="추억담" backgroundColor="#F8F9FA"
+                           showWriteBtn={true} >
+            </BaseBoardGrid>
             <div className="margin_gap_2"></div>
             <Base>
               <div className="un_auth_wrap">
                 <h2>작성된 추억이 없습니다.</h2>
               </div>
             </Base>
-            <Loader/>
+            {/*<Loader/>*/}
           </>
         )
       }

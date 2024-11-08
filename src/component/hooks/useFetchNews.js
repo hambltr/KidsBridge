@@ -25,6 +25,7 @@ const useFetchNews = () => {
                         title: doc.fields.title.stringValue,
                         author: doc.fields.author.stringValue,
                         time: kstTimeString,
+                        sortTime: utcDate,
                         contents: doc.fields.contents.stringValue
                     };
                 });

@@ -8,11 +8,12 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Firebase Storage 관련 함수 import
 import { v4 as uuidv4 } from 'uuid'; // 유니크한 ID 생성을 위한 라이브러리
 
-function WriteFormWithEditor({ onSubmit, onCancel }) {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+function WriteFormWithEditor({ onSubmit, onCancel, isEditMode = false, initialTitle = '', initialContent = '', initialSrc = [] }) {
+  const [title, setTitle] = useState(initialTitle);
+  const [content, setContent] = useState(initialContent);
   const [author, setAuthor] = useState(''); // 작성자 필드
-  const [src, setSrc] = useState([]); // 이미지 URL 배열 필드 추가
+  const [authorUid, setAuthorUid] = useState(''); // 작성자 UID
+  const [src, setSrc] = useState(initialSrc); // 이미지 URL 배열 필드 추가
   const [files, setFiles] = useState([]); // 파일 상태 추가
   const [fileCount, setFileCount] = useState(0); // 선택한 파일 수 추가
 
@@ -27,7 +28,8 @@ function WriteFormWithEditor({ onSubmit, onCancel }) {
           const userDocSnap = await getDoc(userDocRef);
           if (userDocSnap.exists()) {
             const userData = userDocSnap.data();
-            setAuthor(userData.nickname); // Firestore에서 닉네임 가져오기
+            setAuthor(userData.nickname);
+            setAuthorUid(user.uid); // 현재 로그인한 사용자의 UID를 저장
           }
         } catch (error) {
           console.error("Failed to fetch user nickname: ", error);
@@ -37,6 +39,15 @@ function WriteFormWithEditor({ onSubmit, onCancel }) {
 
     return () => unsubscribe(); // 컴포넌트 언마운트 시 리스너 정리
   }, []);
+
+  // 수정 모드일 때, 초기값을 설정하는 useEffect
+  useEffect(() => {
+    if (isEditMode) {
+      setTitle(initialTitle);
+      setContent(initialContent);
+      setSrc(initialSrc);
+    }
+  }, [isEditMode, initialTitle, initialContent, initialSrc]);
 
   // 툴바 설정
   const modules = {
@@ -79,35 +90,58 @@ function WriteFormWithEditor({ onSubmit, onCancel }) {
       // src 배열에 업로드된 모든 URL 추가
       setSrc((prevSrc) => [...prevSrc, ...uploadedUrls]);
 
-      // 업로드된 모든 이미지 URL을 Quill 에디터에 미리보기로 추가
-      uploadedUrls.forEach((url) => {
-        setContent((prevContent) => prevContent + `<img src="${url}" alt="업로드된 이미지" />`);
-      });
     } catch (error) {
       console.error("Failed to upload images: ", error);
     }
   };
 
-  // 제출 버튼 핸들러
-  // 제출 버튼 핸들러
+  // 이미지 삭제 핸들러
+  const handleImageDelete = (url) => {
+    const updatedSrc = src.filter((imageUrl) => imageUrl !== url);
+    setSrc(updatedSrc);
+  };
+
+  // 제출 핸들러
   const handleSubmit = async () => {
     if (title && author) { // 본문은 별도로 처리하므로, title과 author만 확인
+
+      // 본문 내용에서 HTML 태그 제거 (순수한 텍스트만 남기기)
+      const parser = new DOMParser();
+      const parsedDoc = parser.parseFromString(content, 'text/html');
+      let textContent = parsedDoc.body.textContent || ''; // 본문 내용에서 텍스트만 가져옴
+
+      // 본문이 비어 있으면 스페이스 하나로 설정
+      if (textContent.trim() === '') {
+        textContent = ' ';
+      }
+
+      // src가 비어있으면 기본 이미지 URL 추가
+      let updatedSrc = src;
+      if (updatedSrc.length === 0) {
+        updatedSrc = ['https://firebasestorage.googleapis.com/v0/b/kidsbridge-d58cc.appspot.com/o/Reminiscence%2FtempImg.png?alt=media&token=3298286b-fefa-4c85-8b39-a48b5092dd2f'];
+      }
+
+      if (isEditMode) {
+        // 수정 모드인 경우, 새로운 글 생성하지 않고 수정된 데이터만 전달
+        if (onSubmit) {
+          onSubmit({
+            title: title,
+            contents: textContent, // 순수한 텍스트 내용 전달
+            src: updatedSrc,
+          });
+        }
+        return; // 수정 모드일 경우, 새로운 글 생성 로직을 실행하지 않도록 반환
+      }
+
+      // 작성 모드인 경우에만 아래 로직 실행
       try {
-        // 이미지가 없을 때 기본 이미지 URL을 추가
-        let updatedSrc = src;
-        if (updatedSrc.length === 0) {
-          updatedSrc = ['https://firebasestorage.googleapis.com/v0/b/kidsbridge-d58cc.appspot.com/o/Reminiscence%2FtempImg.png?alt=media&token=3298286b-fefa-4c85-8b39-a48b5092dd2f'];
+        // 로그인된 사용자 UID 가져오기
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+          alert("로그인이 필요합니다.");
+          return;
         }
-
-        // 본문 내용에서 HTML 태그 제거 (순수한 텍스트만 남기기)
-        const parser = new DOMParser();
-        const parsedDoc = parser.parseFromString(content, 'text/html');
-        let textContent = parsedDoc.body.textContent || ''; // 본문 내용에서 텍스트만 가져옴
-
-        // 본문이 비어 있으면 스페이스 하나로 설정
-        if (textContent.trim() === '') {
-          textContent = ' ';
-        }
+        const authorUid = currentUser.uid;
 
         // 카운터 값 가져오기 및 업데이트
         const counterDocRef = doc(db, 'counters', 'reminiscenceCounter');
@@ -133,6 +167,7 @@ function WriteFormWithEditor({ onSubmit, onCancel }) {
         await setDoc(doc(reminiscenceCollectionRef, documentId), {
           id: newId,                    // 추가된 정수 ID
           author: author,               // 작성자
+          authorUid: authorUid,         // 작성자의 UID
           title: title,                 // 제목
           contents: textContent,        // 순수한 텍스트 내용 저장 (비어 있으면 " ")
           src: updatedSrc,              // 이미지 URL 배열 (기본 이미지 포함)
@@ -145,6 +180,7 @@ function WriteFormWithEditor({ onSubmit, onCancel }) {
             id: newId,                   // 정수 ID
             title: title,                // 제목
             author: author,              // 작성자
+            authorUid: authorUid,        // 작성자의 UID
             time: new Date().toISOString(), // 현재 시간을 문자열로 변환
             contents: textContent,       // 본문 내용 (비어 있으면 " ")
             src: updatedSrc              // 이미지 URL 배열 (기본 이미지 포함)
@@ -156,8 +192,8 @@ function WriteFormWithEditor({ onSubmit, onCancel }) {
     } else {
       alert("제목 또는 본문을 작성해주세요.");
     }
+    window.location.reload();
   };
-
 
 
   return (
@@ -179,21 +215,25 @@ function WriteFormWithEditor({ onSubmit, onCancel }) {
           placeholder="내용을 입력하세요."
         />
       </div>
+      {/* 이미지 미리보기 추가 */}
+      <div className="img_preview_wrap">
+        {src.map((url, index) => (
+          <div key={index} className="img_preview">
+            <img src={url} alt={`이미지 ${index}`} className="preview_img" />
+            <button className="delete_img_btn" onClick={() => handleImageDelete(url)}>삭제</button>
+          </div>
+        ))}
+      </div>
       {/* 이미지 파일 입력 추가 */}
-      <div>
+      <div className="img_input_wrap">
         <input
+          className="img_input"
           type="file"
           accept="image/*"
           multiple
           onChange={handleFileChange}
         />
       </div>
-      {/* 선택한 파일 수 표시 */}
-      {fileCount > 0 && (
-        <div className="file_count">
-          <p>선택한 파일 수: {fileCount}</p>
-        </div>
-      )}
       <div className="btn_wrap write_btn_wrap">
         <button className="btn_basic write_btn cancel_btn" onClick={onCancel}>취소</button>
         <button className="btn_basic write_btn" onClick={handleSubmit}>저장</button>

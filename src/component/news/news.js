@@ -12,10 +12,15 @@ function News({ newsItems, height }) {
   // newsItems 배열의 존재 여부와 비어 있는지 확인
   const hasNews = newsItems && newsItems.length > 0;
 
+  // newsItems 배열을 sortTime을 기준으로 내림차순 정렬
+  const sortedNewsItems = hasNews
+    ? [...newsItems].sort((a, b) => b.sortTime - a.sortTime)  // 내림차순 정렬
+    : [];
+
   return (
     <Base showTitle="내 소식" showRefreshButton={true} showAllButton={true} innerStyle={componentStyle}>
       {hasNews ? (
-        newsItems.map((item) => (
+        sortedNewsItems.map((item) => (
           <Mini key={item.id} item={item} SvgName1={SvgNotice} SvgName2={SvgBubble}/>
         ))
       ) : (
